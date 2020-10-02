@@ -1,3 +1,4 @@
+import { deleteProduct } from 'actions';
 import { getProducts } from 'actions';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,44 +15,47 @@ import {
 
 function AllProducts() {
 
-    const dispatch = useDispatch();
-    const products = useSelector(state => state.getProducts.products);
-    const loading = useSelector(state => state.getProducts.loading);
+    const domain = 'http://localhost:8080/';
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuZGUiLCJ1c2VyaWQiOiI1ZjYyNjZiYWMwNTJlNWJjZjdmYTJlOTAiLCJpYXQiOjE2MDA5ODM2MzYsImV4cCI6MTYwMDk5NDQzNn0.zK3oVlvKHY0f6vvvozzhZEnwm6WDwE-2Yzcoq6MelIQ';
+    const dispatch = useDispatch();
+    // token must have for fetching products
+    const token = useSelector(state => state.sessionAdmin.token);
+
+    const products = useSelector(state => state.getProductsAdmin.products);
+    const loading = useSelector(state => state.getProductsAdmin.loading);
 
     useEffect(() => {
         dispatch(getProducts(token));
-    }, [dispatch]);
+    }, [dispatch, token]);
 
     const productCard = products.map( (product, index) => {
                     return (
-                        <Card style={{ width: "16rem"}} className="mx-2" key={product._id}>
+                        <Card style={{ width: "14rem"}} className="mx-2 my-3" key={product._id}>
                         <CardImg
-                            style={{width: '100%', height: '16rem'}}
+                            style={{width: '100%', height: '12rem'}}
                             alt={product.title}
-                            src={product.image}
+                            src={ domain + product.image }
                             top
                         />
 
                         <CardBody>
-                            <CardTitle style={{fontSize: 'calc(12px + 0.4vw)'}}>{product.title}</CardTitle>
-                            <CardTitle style={{fontSize: 'calc(8px + 0.4vw)'}}>$ {product.price}</CardTitle>
-                            <CardText style={{fontSize: 'calc(8px + 0.3vw)'}}>
+                            <CardTitle style={{fontSize: '16px'}}>{product.title}</CardTitle>
+                            <CardTitle style={{fontSize: '14px'}}>$ {product.price}</CardTitle>
+                            <CardText style={{fontSize: '12px'}} className="text-truncate">
                                 {product.details}
                             </CardText>
                             <div className="row justify-content-around">
                                 <Button
                                     color="primary"
-                                    href="#pablo"
-                                    onClick={e => e.preventDefault()}
+                                    href={`/admin/add-products/` + product._id }
                                 >
                                     Update
                                 </Button>
                                 <Button
                                     color="primary"
-                                    href="#pablo"
-                                    onClick={e => e.preventDefault()}
+                                    onClick={() => {
+                                        dispatch(deleteProduct(product._id, token));
+                                    }}
                                 >
                                     Delete
                                 </Button>
@@ -62,11 +66,11 @@ function AllProducts() {
     })
 
     return (
-        <div>
+        <div style={{minHeight: '100vh'}} className="bg-dark ">
         {
             loading ? <div className="text-danger mx-auto mt-5">LOADING...</div> 
             :
-            <Container className="h-100vh bg-dark row" style={{paddingTop: '100px'}} fluid>
+            <Container className="row" style={{paddingTop: '100px'}} fluid>
                 {productCard}
             </Container>
         }

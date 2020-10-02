@@ -24,8 +24,21 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import Login from "views/examples/Login.js";
+import { useSelector } from "react-redux";
 
 const App = () => {
+
+  const isLogin = useSelector(state => state.sessionAdmin.isLogin);
+
+  if (!isLogin) {
+    return(
+      <BrowserRouter>
+        <Redirect from="/" to="/auth/login" />
+        <Route path="/auth/login" render={props => <Login {...props} />} />
+      </BrowserRouter>
+    )
+  }
     return(
         <BrowserRouter>
           <Switch>

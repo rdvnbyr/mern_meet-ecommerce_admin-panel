@@ -18,8 +18,8 @@
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 // import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
+// import Register from "views/examples/Register.js";
+// import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import AllProducts from "views/examples/AllProducts";
 import AddProducts from "views/examples/AddProducts";
@@ -44,7 +44,7 @@ import AddProducts from "views/examples/AddProducts";
         layout: "/admin"
       },
       {
-        path: "/add-products",
+        path: "/add-products/",
         name: "Add Products",
         icon: "ni ni-tv-2 text-success",
         component: AddProducts,
@@ -78,20 +78,20 @@ import AddProducts from "views/examples/AddProducts";
         component: Tables,
         layout: "/admin"
       },
-      {
-        path: "/login",
-        name: "Login",
-        icon: "ni ni-key-25 text-info",
-        component: Login,
-        layout: "/auth"
-      },
-      {
-        path: "/register",
-        name: "Register",
-        icon: "ni ni-circle-08 text-pink",
-        component: Register,
-        layout: "/auth"
-      }
+      // {
+      //   path: "/login",
+      //   name: "Login",
+      //   icon: "ni ni-key-25 text-info",
+      //   component: Login,
+      //   layout: "/auth"
+      // },
+      // {
+      //   path: "/register",
+      //   name: "Register",
+      //   icon: "ni ni-circle-08 text-pink",
+      //   component: Register,
+      //   layout: "/auth"
+      // }
     ];
   
 
