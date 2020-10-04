@@ -31,6 +31,7 @@ function AddProducts() {
     const [ price, setPrice ] = useState('');
     const [ image, setImage ] = useState(null);
     const [ category, setCategory ] = useState('');
+    const [ state, setState ] = useState('');
 
     useEffect(() => {
       if(productId) {
@@ -46,6 +47,7 @@ function AddProducts() {
         dataForm.append('image', image === null ? product.image : image);
         dataForm.append('price', (price === '' | 0) ? product.price : price);
         dataForm.append('category', category === '' ? product.category : category);
+        dataForm.append('state', state === '' ? product.state : state);
 
         productId ? dispatch(updateProduct( dataForm, token, productId )) : dispatch(addProduct(dataForm, token));
     };
@@ -107,6 +109,22 @@ function AddProducts() {
                           onChange={ (e) => setCategory(e.target.value) }
                           defaultValue={productId ? product.category : category }
                       />
+                  </InputGroup>
+                </FormGroup>
+                  <FormGroup>
+                  <label className="text-muted"><small>State</small></label>
+                  <InputGroup className="input-group-alternative mb-3">
+                      <select
+                          className="w-100 border-0 py-2"
+                          as="select"
+                          name="state"
+                          onChange={ (e) => setState(e.target.value) }
+                          defaultValue={productId ? product.state : state }
+                      >
+                      <option>none</option>
+                      <option>Weeks Deal</option>
+                      <option>Best Seller</option>
+                      </select>
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>

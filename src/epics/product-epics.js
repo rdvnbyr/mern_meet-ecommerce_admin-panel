@@ -23,6 +23,7 @@ function addProductEpics(action$) {
                                 'Authorization': `Bearer ${action.payload.token}` 
                             }
                         }
+                    
                     )
                     .then((res) => {
                         console.log(res);
@@ -80,7 +81,7 @@ function getProductsEpics(action$) {
             (action) => from(
                 axios
                     .get(
-                        'https://meethub-node-restapi.herokuapp.com/admin/get-products',
+                        'http://localhost:8080/admin/get-products',
                         {
                             headers: {
                                 'Authorization': `Bearer ${action.payload.access_token}`

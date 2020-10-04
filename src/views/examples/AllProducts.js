@@ -44,6 +44,8 @@ function AllProducts() {
                             <CardText style={{fontSize: '12px'}} className="text-truncate">
                                 {product.details}
                             </CardText>
+                            <CardTitle style={{fontSize: '12px'}}>State: {product.state}</CardTitle>
+                            <CardTitle style={{fontSize: '12px'}}>{product.category}</CardTitle>
                             <div className="row justify-content-around">
                                 <Button
                                     color="primary"
