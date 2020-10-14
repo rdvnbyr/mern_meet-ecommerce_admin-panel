@@ -5,6 +5,8 @@ import axios from 'axios';
 import { ADD_PRODUCT,  GET_PRODUCTS, GET_ONE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, deleteProductSuccess, deleteProductFail } from '../actions';
 import { addProductSuccess, addProductFail, getProductsFail, getProductsSuccess, getOneProductSuccess, getOneProductFail, updateProductSuccess, updateProductFail } from '../actions';
 
+
+const api = 'http://localhost:8080/admin' // 
 /**
  * add product to db
  * @param {*} action$
@@ -23,7 +25,6 @@ function addProductEpics(action$) {
                                 'Authorization': `Bearer ${action.payload.token}` 
                             }
                         }
-                    
                     )
                     .then((res) => {
                         console.log(res);
@@ -140,7 +141,7 @@ function deleteProductEpics(action$) {
             (action) => from(
                 axios
                     .delete(
-                        `http://localhost:8080/admin/delete-product/${action.payload.productId}`,
+                        api + `/delete-product/${action.payload.productId}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${action.payload.token}`

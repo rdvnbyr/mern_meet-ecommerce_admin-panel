@@ -5,6 +5,9 @@ import axios from 'axios';
 import { SESSION_LOGIN } from '../actions';
 import { loginFail, loginSuccess } from '../actions';
 
+
+const api = 'http://localhost:8080'; // https://meethub-node-restapi.herokuapp.com
+
 /**
  * add product to db
  * @param {*} action$
@@ -16,7 +19,7 @@ function sessionLogin(action$) {
             (action) => from(
                 axios
                     .post(
-                        'https://meethub-node-restapi.herokuapp.com/auth/login',
+                        api + '/auth/login',
                         action.payload.user
                     )
                     .then((res) => {

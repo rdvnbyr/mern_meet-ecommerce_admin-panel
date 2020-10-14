@@ -25,12 +25,13 @@ function AddProducts() {
     const token = useSelector(state => state.sessionAdmin.token);
     const loading = useSelector( state => state.addProductAdmin.loading);
     const product = useSelector( state => state.getProductsAdmin.product);
+    const _id = useSelector(state => state.sessionAdmin.userId);
 
     const [ title, setTitle ] = useState('');
     const [ details, setDetails ] = useState('');
     const [ price, setPrice ] = useState('');
     const [ image, setImage ] = useState(null);
-    const [ category, setCategory ] = useState('');
+    const [ brand, setBrand ] = useState('');
     const [ state, setState ] = useState('');
 
     useEffect(() => {
@@ -46,8 +47,9 @@ function AddProducts() {
         dataForm.append('details', details === '' ? product.details : details);
         dataForm.append('image', image === null ? product.image : image);
         dataForm.append('price', (price === '' | 0) ? product.price : price);
-        dataForm.append('category', category === '' ? product.category : category);
+        dataForm.append('brand', brand === '' ? product.brand : brand);
         dataForm.append('state', state === '' ? product.state : state);
+        dataForm.append('_id', _id);
 
         productId ? dispatch(updateProduct( dataForm, token, productId )) : dispatch(addProduct(dataForm, token));
     };
@@ -101,13 +103,13 @@ function AddProducts() {
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
-                  <label className="text-muted"><small>Category</small></label>
+                  <label className="text-muted"><small>Brand</small></label>
                   <InputGroup className="input-group-alternative mb-3">
                       <Input
                           type="text"
-                          name="category"
-                          onChange={ (e) => setCategory(e.target.value) }
-                          defaultValue={productId ? product.category : category }
+                          name="brand"
+                          onChange={ (e) => setBrand(e.target.value) }
+                          defaultValue={productId ? product.brand : brand }
                       />
                   </InputGroup>
                 </FormGroup>

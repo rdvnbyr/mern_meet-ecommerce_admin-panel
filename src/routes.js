@@ -23,6 +23,7 @@ import Profile from "views/examples/Profile.js";
 import Tables from "views/examples/Tables.js";
 import AllProducts from "views/examples/AllProducts";
 import AddProducts from "views/examples/AddProducts";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 // import Icons from "views/examples/Icons.js";
 
 
@@ -48,6 +49,13 @@ import AddProducts from "views/examples/AddProducts";
         name: "Add Products",
         icon: "ni ni-tv-2 text-success",
         component: AddProducts,
+        layout: "/admin"
+      },
+      {
+        path: "/product-details/:id",
+        name: "Product details",
+        icon: "ni ni-tv-2 text-success",
+        component: ProductDetails,
         layout: "/admin"
       },
       // {

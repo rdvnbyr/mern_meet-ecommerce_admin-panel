@@ -36,7 +36,7 @@ const mainReducer = combineReducers({
 });
 
 const persistConfig = {
-    key: 'application',
+    key: 'admin-panel',
     storage,
     blacklist: ['getProductsAdmin','addProductAdmin']
 }
