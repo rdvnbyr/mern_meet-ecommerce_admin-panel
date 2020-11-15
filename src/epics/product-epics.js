@@ -104,7 +104,10 @@ function getProductsEpics(action$) {
                     } )))
     );
 };
-
+/**
+ * 
+ * @param {*} action$ 
+ */
 function getOneProductEpics(action$) {
     return action$.pipe(
         ofType(GET_ONE_PRODUCT),
