@@ -27,8 +27,7 @@ const middleware = compose(
     applyMiddleware(
         epicMiddleware,
         routerMiddleware(routerHistory)
-    ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
 );
 
 // then we create the main reducer, by combining all other reducers
