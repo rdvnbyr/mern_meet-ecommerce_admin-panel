@@ -10,7 +10,11 @@ import { createHashHistory } from 'history';
 import { epics } from './epics';
 
 // then we load all reducer, that we need
-import { addProductReducer, getProductsReducer, sessionReducer } from './reducers';
+import {
+    addProductReducer,
+    getProductsReducer,
+    sessionReducer
+} from './reducers';
  
 // now we generate an application history object. This will be used by the app-container as well, so we need to export it
 export const routerHistory = createHashHistory();
@@ -36,7 +40,7 @@ const mainReducer = combineReducers({
 });
 
 const persistConfig = {
-    key: 'admin-panel',
+    key: 'admin-panel-meet',
     storage,
     blacklist: ['getProductsAdmin','addProductAdmin']
 }
