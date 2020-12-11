@@ -13,7 +13,7 @@ const ProductDetails = () => {
 
 
     const productId = useLocation().pathname.split('/')[3];
-    const domain = 'http://localhost:8080/';
+    const domain = 'https://shopapi.apps.salevali.de/';
 
     const dispatch = useDispatch();
     const token = useSelector(state => state.sessionAdmin.token);

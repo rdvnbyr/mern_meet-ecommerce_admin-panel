@@ -23,7 +23,7 @@ import {
 
 function AllProducts() {
 
-    const domain = 'http://localhost:8080/';
+    const domain = 'https://shopapi.apps.salevali.de/';
 
     const dispatch = useDispatch();
     // token must have for fetching products

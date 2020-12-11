@@ -6,7 +6,7 @@ import { ADD_PRODUCT,  GET_PRODUCTS, GET_ONE_PRODUCT, UPDATE_PRODUCT, DELETE_PRO
 import { addProductSuccess, addProductFail, getProductsFail, getProductsSuccess, getOneProductSuccess, getOneProductFail, updateProductSuccess, updateProductFail } from '../actions';
 
 
-const api = 'http://localhost:8080/admin' // 
+const api = "https://shopapi.apps.salevali.de"
 /**
  * add product to db
  * @param {*} action$
@@ -18,7 +18,7 @@ function addProductEpics(action$) {
             (action) => from(
                 axios
                     .post(
-                        'http://localhost:8080/admin/add-products',
+                        `${api}/admin/add-products`,
                         action.payload.formData,
                         {
                             headers: {
@@ -51,7 +51,7 @@ function updateProductEpics(action$) {
             (action) => from(
                 axios
                     .patch(
-                        `http://localhost:8080/admin/update-product/${action.payload.productId}`,
+                        `${api}/admin/update-product/${action.payload.productId}`,
                         action.payload.formData,
                         {
                             headers: {
@@ -82,7 +82,7 @@ function getProductsEpics(action$) {
             (action) => from(
                 axios
                     .get(
-                        'http://localhost:8080/admin/get-products',
+                        `${api}/admin/get-products`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${action.payload.access_token}`
@@ -115,7 +115,7 @@ function getOneProductEpics(action$) {
             (action) => from(
                 axios
                     .get(
-                        `http://localhost:8080/admin/get-update-product/${action.payload._id}`,
+                        `${api}/admin/get-update-product/${action.payload._id}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${action.payload.access_token}`
@@ -144,7 +144,7 @@ function deleteProductEpics(action$) {
             (action) => from(
                 axios
                     .delete(
-                        api + `/delete-product/${action.payload.productId}`,
+                        api + `/admin/delete-product/${action.payload.productId}`,
                         {
                             headers: {
                                 'Authorization': `Bearer ${action.payload.token}`

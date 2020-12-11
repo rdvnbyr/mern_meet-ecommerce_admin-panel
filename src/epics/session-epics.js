@@ -6,7 +6,7 @@ import { SESSION_LOGIN } from '../actions';
 import { loginFail, loginSuccess } from '../actions';
 
 
-const api = 'http://localhost:8080'; // https://meethub-node-restapi.herokuapp.com
+const api = "https://shopapi.apps.salevali.de"
 
 /**
  * add product to db

@@ -1,1 +1,1 @@
-ssh -t root@apps.salevali.de "cd rdvn/shop-admin-react &&  git pull && npm i && pm2 restart shop.apps.back.salevali.de && echo 'Baglanti TEST' && sleep 22 && curl -Ivs https://shopadmin.apps.salevali.de 2>&1 | grep '< HTTP'"
+ssh -t root@apps.salevali.de "cd rdvn/shop-admin-react &&  git pull && npm i && pm2 restart shopadmin.apps.salevali.de && echo 'Baglanti TEST' && sleep 22 && curl -Ivs https://shopadmin.apps.salevali.de 2>&1 | grep '< HTTP'"
