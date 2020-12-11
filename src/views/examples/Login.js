@@ -19,8 +19,8 @@ import {
 
 const Login = () => {
 
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const [ email, setEmail ] = useState('admin@admin.de');
+  const [ password, setPassword ] = useState('Admin1234');
 
   const dispatch = useDispatch();
 
