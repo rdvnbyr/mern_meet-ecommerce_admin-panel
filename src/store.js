@@ -11,8 +11,7 @@ import { epics } from './epics';
 
 // then we load all reducer, that we need
 import {
-    addProductReducer,
-    getProductsReducer,
+    productReducer,
     sessionReducer
 } from './reducers';
  
@@ -32,16 +31,15 @@ const middleware = compose(
 
 // then we create the main reducer, by combining all other reducers
 const mainReducer = combineReducers({
-    routerAdmin: connectRouter(routerHistory),
-    addProductAdmin: addProductReducer,
-    getProductsAdmin: getProductsReducer,
-    sessionAdmin: sessionReducer
+    router: connectRouter(routerHistory),
+    product: productReducer,
+    session: sessionReducer
 });
 
 const persistConfig = {
     key: 'admin-panel-meet',
     storage,
-    blacklist: ['getProductsAdmin','addProductAdmin']
+    blacklist: []
 }
 
 const persistedReducer = persistReducer(persistConfig, mainReducer);

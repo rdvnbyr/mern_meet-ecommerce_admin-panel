@@ -1,28 +1,28 @@
 import { combineEpics, ofType } from 'redux-observable';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, withLatestFrom } from 'rxjs/operators';
 import { from } from 'rxjs';
 import axios from 'axios';
 import { ADD_PRODUCT,  GET_PRODUCTS, GET_ONE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, deleteProductSuccess, deleteProductFail } from '../actions';
 import { addProductSuccess, addProductFail, getProductsFail, getProductsSuccess, getOneProductSuccess, getOneProductFail, updateProductSuccess, updateProductFail } from '../actions';
 
 
-const api = "https://shopapi.apps.salevali.de"
 /**
  * add product to db
  * @param {*} action$
  */
-function addProductEpics(action$) {
+function addProductEpics(action$,state$) {
     return action$.pipe(
         ofType(ADD_PRODUCT),
+        withLatestFrom(state$),
         mergeMap(
-            (action) => from(
+            ([action,state]) => from(
                 axios
                     .post(
-                        `${api}/admin/add-products`,
+                        `${state.session.apiUrl}/admin/add-products`,
                         action.payload.formData,
                         {
                             headers: {
-                                'Authorization': `Bearer ${action.payload.token}` 
+                                'Authorization': `Bearer ${state.session.token}`
                             }
                         }
                     )
@@ -44,18 +44,19 @@ function addProductEpics(action$) {
 /**
  * @param {*} action$ 
  */
-function updateProductEpics(action$) {
+function updateProductEpics(action$,state$) {
     return action$.pipe(
         ofType(UPDATE_PRODUCT),
+        withLatestFrom(state$),
         mergeMap(
-            (action) => from(
+            ([action,state]) => from(
                 axios
                     .patch(
-                        `${api}/admin/update-product/${action.payload.productId}`,
+                        `${state.session.apiUrl}/admin/update-product/${action.payload.productId}`,
                         action.payload.formData,
                         {
                             headers: {
-                                'Authorization': `Bearer ${action.payload.token}` 
+                                'Authorization': `Bearer ${state.session.token}` 
                             }
                         }
                     )
@@ -75,17 +76,18 @@ function updateProductEpics(action$) {
 };
 
 
-function getProductsEpics(action$) {
+function getProductsEpics(action$,state$) {
     return action$.pipe(
         ofType(GET_PRODUCTS),
+        withLatestFrom(state$),
         mergeMap(
-            (action) => from(
+            ([action,state]) => from(
                 axios
                     .get(
-                        `${api}/admin/get-products`,
+                        `${state.session.apiUrl}/admin/get-products`,
                         {
                             headers: {
-                                'Authorization': `Bearer ${action.payload.access_token}`
+                                'Authorization': `Bearer ${state.session.token}`
                             }
                         }
                     )
@@ -108,17 +110,18 @@ function getProductsEpics(action$) {
  * 
  * @param {*} action$ 
  */
-function getOneProductEpics(action$) {
+function getOneProductEpics(action$,state$) {
     return action$.pipe(
         ofType(GET_ONE_PRODUCT),
+        withLatestFrom(state$),
         mergeMap(
-            (action) => from(
+            ([action,state]) => from(
                 axios
                     .get(
-                        `${api}/admin/get-update-product/${action.payload._id}`,
+                        `${state.session.apiUrl}/admin/get-update-product/${action.payload._id}`,
                         {
                             headers: {
-                                'Authorization': `Bearer ${action.payload.access_token}`
+                                'Authorization': `Bearer ${state.session.token}`
                             }
                         }
                     )
@@ -137,17 +140,18 @@ function getOneProductEpics(action$) {
     );
 };
 
-function deleteProductEpics(action$) {
+function deleteProductEpics(action$,state$) {
     return action$.pipe(
         ofType(DELETE_PRODUCT),
+        withLatestFrom(state$),
         mergeMap(
-            (action) => from(
+            ([action,state]) => from(
                 axios
                     .delete(
-                        api + `/admin/delete-product/${action.payload.productId}`,
+                        state.session.apiUrl + `/admin/delete-product/${action.payload.productId}`,
                         {
                             headers: {
-                                'Authorization': `Bearer ${action.payload.token}`
+                                'Authorization': `Bearer ${state.session.token}`
                             }
                         }
                     )

@@ -8,6 +8,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import ProductDetails from "components/ProductDetails/ProductDetails";
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -54,13 +55,14 @@ class Admin extends React.Component {
             imgAlt: "..."
           }}
         />
-        <div className="main-content" ref="mainContent">
+        <div className="main-content bg-default" ref="mainContent">
           <AdminNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
           <Switch>
             {this.getRoutes(routes)}
+            <Route path="/admin/product-details/:id" component={ProductDetails} />
             <Redirect from="*" to="/admin/index" />
           </Switch>
           <Container fluid>

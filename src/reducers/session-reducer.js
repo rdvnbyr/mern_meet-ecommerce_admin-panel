@@ -5,6 +5,7 @@ const initialState = {
     isLogin: false,
     error: '',
     token: '',
+    apiUrl: "https://shopapi.apps.salevali.de",
     userId: '',
     user: {}
 };

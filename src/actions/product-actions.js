@@ -7,16 +7,26 @@ import {
     UPDATE_PRODUCT_FAIL,
     DELETE_PRODUCT,
     DELETE_PRODUCT__SUCCESS,
-    DELETE_PRODUCT_FAIL
+    DELETE_PRODUCT_FAIL,
+    GET_PRODUCTS,
+    GET_PRODUCTS_SUCCESS,
+    GET_PRODUCTS_FAIL,
+    GET_ONE_PRODUCT,
+    GET_ONE_PRODUCT_SUCCESS,
+    GET_ONE_PRODUCT_FAIL
 
 } from './action-types';
 
-export const addProduct = (formData, token) => {
+/* ------------------------------ */
+/**
+ * Add product => POST
+ * @param {*} formData 
+ */
+export const addProduct = (formData) => {
     return {
         type: ADD_PRODUCT,
         payload: {
-            formData: formData,
-            token: token
+            formData: formData
         }
     };
 };
@@ -35,18 +45,17 @@ export const addProductFail = () => {
         type: ADD_PRODUCT_FAIL
     };
 };
-
+/* ------------------------------ */
+/* ------------------------------ */
 /**
- * 
+ * update product  => PUT
  * @param {*} formData 
- * @param {*} token 
  */
-export const updateProduct = (formData, token, productId ) => {
+export const updateProduct = (formData, productId ) => {
     return {
         type: UPDATE_PRODUCT,
         payload: {
             formData: formData,
-            token: token,
             productId: productId
         }
     };
@@ -66,18 +75,17 @@ export const updateProductFail = () => {
         type: UPDATE_PRODUCT_FAIL
     };
 };
-
+/* ------------------------------ */
+/* ------------------------------ */
 /**
  * delete product actions
  * @param type{string} product id
  */
-export const deleteProduct = (productId, token) => {
-    console.log(token)
+export const deleteProduct = (productId) => {
     return {
         type: DELETE_PRODUCT,
         payload: {
-            productId: productId,
-            token: token
+            productId: productId
         }
     }
 };
@@ -96,3 +104,65 @@ export const deleteProductFail = () => {
         type: DELETE_PRODUCT_FAIL
     }
 };
+/* ------------------------------ */
+/* ------------------------------ */
+
+/**
+ * Action for Get all Products from db
+ */
+export const getProducts = () => {
+    return {
+        type: GET_PRODUCTS
+    };
+};
+
+export const getProductsSuccess = (products) => {
+    return {
+        type: GET_PRODUCTS_SUCCESS,
+        payload: {
+            products: products
+        }
+    };
+};
+
+export const getProductsFail = (error) => {
+    return {
+        type: GET_PRODUCTS_FAIL,
+        payload: {
+            error: error
+        }
+    };
+};
+/* ------------------------------ */
+/* ------------------------------ */
+/**
+ * Action for Get one product
+ * @param type{string} productId
+ */
+export const getOneProduct = (productId) => {
+    return {
+        type: GET_ONE_PRODUCT,
+        payload: {
+            _id: productId
+        }
+    };
+};
+
+export const getOneProductSuccess = (product) => {
+    return {
+        type: GET_ONE_PRODUCT_SUCCESS,
+        payload: {
+            product: product
+        }
+    };
+};
+
+export const getOneProductFail = (error) => {
+    return {
+        type: GET_ONE_PRODUCT_FAIL,
+        payload: {
+            error: error
+        }
+    };
+};
+/* ------------------------------ */

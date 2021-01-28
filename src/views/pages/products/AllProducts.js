@@ -1,8 +1,9 @@
+import React, { useEffect } from 'react';
 import { deleteProduct } from 'actions';
 import { getProducts } from 'actions';
-import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 // reactstrap components
 import {
     Container,
@@ -19,47 +20,48 @@ import {
     DropdownToggle,
     Media,
     Table,
+    CardHeader
   } from "reactstrap";
 
 function AllProducts() {
 
-    const domain = 'https://shopapi.apps.salevali.de/';
-
     const dispatch = useDispatch();
-    // token must have for fetching products
-    const token = useSelector(state => state.sessionAdmin.token);
 
-    const products = useSelector(state => state.getProductsAdmin.products);
-    const loading = useSelector(state => state.getProductsAdmin.loading);
+    const {products, loading, apiUrl} = useSelector(
+      (state) => ({
+        products: state.product.products,
+        loading: state.product.loading,
+        apiUrl: state.session.apiUrl
+      }),
+      shallowEqual
+    );
 
-    const [ toggleGrid, setToggleGrid] = useState(false)
+    const [ toggleGrid, setToggleGrid] = useState(false);
 
     useEffect(() => {
-        dispatch(getProducts(token));
-    }, [dispatch, token]);
+        dispatch(getProducts());
+    }, [dispatch]);
 
     const toggleHandler = () => setToggleGrid(!toggleGrid);
 
     const productCard = products.map( (product, index) => {
             return (
-                    <Card style={{ width: "14rem"}} className="mx-2 my-3" key={product._id}>
-                    <a href={`/admin/product-details/` + product._id }>
+                  <Card style={{ width: "18rem"}} className="mx-2 my-3" key={product._id}>
+                    <CardHeader className="p-5" style={{height: "18rem", width: "100%"}}>
+                      <div style={{height: "100%", width: "100%"}}>
                         <CardImg
-                            style={{width: '100%', height: '12rem'}}
+                            style={{height: "100%"}}
                             alt={product.title}
-                            src={ domain + product.image }
-                            top
+                            src={ `${apiUrl}/${product.image}` }
                         />
-                    </a>
-    
+                      </div>
+                    </CardHeader>
                     <CardBody>
-                        <CardTitle style={{fontSize: '16px'}}>{product.title}</CardTitle>
-                        <CardTitle style={{fontSize: '14px'}}>$ {product.price}</CardTitle>
-                        <CardText style={{fontSize: '12px'}} className="text-truncate">
-                            {product.details}
-                        </CardText>
-                        <CardTitle style={{fontSize: '12px'}}>State: {product.state}</CardTitle>
-                        <CardTitle style={{fontSize: '12px'}}>{product.brand}</CardTitle>
+                        <CardTitle><Link to={`/admin/product-details/${product._id}`}>{`${product.brand} / ${product.title}`}</Link></CardTitle>
+                        <CardText><span className="text-muted" >Price: </span>${product.price}</CardText>
+                        <CardText><span className="text-muted">State: </span>{product.state}</CardText>
+                        <CardText><span className="text-muted">Rating: </span>{product.rating}</CardText>
+                        <CardText><span className="text-muted">Stock: </span>{product.countInStock}</CardText>
                         <div className="row justify-content-around">
                             <Button
                                 color="primary"
@@ -70,7 +72,7 @@ function AllProducts() {
                             <Button
                                 color="primary"
                                 onClick={() => {
-                                    dispatch(deleteProduct(product._id, token));
+                                    dispatch(deleteProduct(product._id));
                                 }}
                             >
                                 Delete
@@ -78,9 +80,8 @@ function AllProducts() {
                         </div>
                     </CardBody>
                 </Card>
-            )
-        
-    })
+            );
+    });
 
     const productTable = products.map( (product, index) => {
             return (
@@ -94,7 +95,7 @@ function AllProducts() {
                           >
                             <img
                               alt="..."
-                              src={ domain + product.image }
+                              src={ `${apiUrl}/${product.image}`}
                             />
                           </a>
                           <Media>
@@ -141,7 +142,7 @@ function AllProducts() {
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                dispatch(deleteProduct(product._id, token));
+                                dispatch(deleteProduct(product._id));
                             }}
                             >
                               Delete Product
@@ -150,13 +151,12 @@ function AllProducts() {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-
             )
         
-    })
+    });
 
     return (
-        <div style={{minHeight: '100vh'}} className="bg-dark ">
+        <div style={{minHeight: '100vh'}} className=" bg-default">
             <div>
                 <Button
                     color="secondary"
@@ -173,21 +173,21 @@ function AllProducts() {
             <Container className="row" style={{paddingTop: '100px'}} fluid>
                 { !toggleGrid ?
                      productCard : 
-                        <Table className="align-items-center table-flush" responsive>
-                        <thead className="thead-light">
+                     <Table className="align-items-center table-flush" responsive>
+                      <thead className="thead-light">
                         <tr>
                             <th scope="col">Title</th>
                             <th scope="col">Brand</th>
                             <th scope="col">Price</th>
                             <th scope="col">In Stock</th>
                             <th scope="col">State</th>
-                            <th scope="col" />
+                            <th scope="col" >Action</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {productTable}
-                        </tbody>
-                        </Table>
+                      </thead>
+                      <tbody>
+                      {productTable}
+                      </tbody>
+                     </Table> 
                 }
             </Container>
         }
@@ -196,4 +196,4 @@ function AllProducts() {
     
 }
 
-export default AllProducts
+export default AllProducts;

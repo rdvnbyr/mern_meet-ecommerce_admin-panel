@@ -16,7 +16,7 @@ import {
 
 const AdminNavbar = (props) => {
 
-  const user = useSelector(state => state.sessionAdmin.user);
+  const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const logoutPage = () => {

@@ -1,4 +1,4 @@
-import { addProduct, getOneProduct, updateProduct } from '../../actions';
+import { addProduct, getOneProduct, updateProduct } from '../../../actions';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -22,10 +22,9 @@ function AddProducts() {
     const productId = useLocation().pathname.split('/')[3];
 
     const dispatch = useDispatch();
-    const token = useSelector(state => state.sessionAdmin.token);
-    const loading = useSelector( state => state.addProductAdmin.loading);
-    const product = useSelector( state => state.getProductsAdmin.product);
-    const _id = useSelector(state => state.sessionAdmin.userId);
+    const loading = useSelector( state => state.product.loading);
+    const product = useSelector( state => state.product.product);
+    const _id = useSelector(state => state.session.userId);
 
     const [ title, setTitle ] = useState('');
     const [ details, setDetails ] = useState('');
@@ -36,9 +35,9 @@ function AddProducts() {
 
     useEffect(() => {
       if(productId) {
-        dispatch(getOneProduct(token, productId));
+        dispatch(getOneProduct( productId));
       }
-    }, [dispatch, productId, token]);
+    }, [dispatch, productId]);
  
     const onSubmit = (e) => {
         e.preventDefault();
@@ -51,7 +50,7 @@ function AddProducts() {
         dataForm.append('state', state === '' ? product.state : state);
         dataForm.append('_id', _id);
 
-        productId ? dispatch(updateProduct( dataForm, token, productId )) : dispatch(addProduct(dataForm, token));
+        productId ? dispatch(updateProduct( dataForm, productId )) : dispatch(addProduct(dataForm));
     };
 
     return (
